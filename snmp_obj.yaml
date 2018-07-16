@@ -1,0 +1,32 @@
+name: snmpobject
+namespace: com.example.stylebook
+version: "1.0"
+display-name: Basic Load Balancer App
+description: This is an example Stylebook that creates a load balacer application
+schema-version: "1.0"
+import-stylebooks: 
+  - 
+    namespace: netscaler.nitro.config
+    version: "10.5"
+    prefix: ns
+
+parameters: 
+  - 
+    name: appname
+    label: "Application Name"
+    description: "String to identify the application"
+    type: string
+    required: true
+ 
+ 
+components:
+  
+  -
+    name: components1
+    type: ns::snmpmib
+    properties:
+      contact: "admin1"
+      name: "my_netscaler1"
+      location: "bangalore"
+      
+      
