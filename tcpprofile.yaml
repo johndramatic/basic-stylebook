@@ -65,6 +65,7 @@ components:
       feature:
         - LB
         - IPv6PT
+        - OSPF
         
 #  -
 #    name: disable-nsfeatures-comp
