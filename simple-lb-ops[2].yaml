@@ -1,0 +1,33 @@
+name: simple-lb-ops-2
+namespace: com.youcef.stylebooks
+schema-version: "1.0"
+version: "0.1"
+description: Test StyleBook to see accumulation
+import-stylebooks: 
+  - 
+    namespace: netscaler.nitro.config
+    version: "10.5"
+    prefix: ns
+components:
+    -
+        name: lbvserver-comp
+        type: ns::lbvserver
+        properties:
+            name: str("lb-") + str($current-target.ip)
+            servicetype: HTTP
+            ipv46: 1.1.21.37
+            port: 80
+operations:
+    analytics:
+        -
+            name: comp-ops
+            properties:
+                target: $outputs.mylbs
+                filter: "true"
+                insights:
+                    - 
+                        type: webinsight
+outputs:
+  -
+    name: mylbs
+    value: $components.lbvserver-comp

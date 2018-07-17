@@ -1,0 +1,45 @@
+---
+name: ldap-pol-test
+namespace: com.citrix.adc.stylebooks.tests
+version: "1.0"
+display-name: LDAP Policy StyleBook Test
+description: | 
+  This StyleBook configures NetScaler with an LDAP policy
+schema-version: "1.0"
+import-stylebooks:
+  - 
+    namespace: com.citrix.adc.stylebooks
+    prefix: stlb
+    version: "1.1"
+  - 
+    namespace: com.citrix.adc.commontypes
+    prefix: cmtypes
+    version: "1.0"
+parameters:
+    -
+        name: appname
+        type: string
+        label: Application Name
+        description: The Application Name
+        required: true
+    -
+        name: rule
+        type: string
+        label: NetScaler Policy Rule (PI) 
+        description: NetScaler Policy Rule that selects the traffic (requests) this this LDAP policy applies to.
+        default: "true"
+    -
+        name: ldap-settings
+        type: object
+        label: LDAP Settings
+        description: Parameters for configuring LDAP Settings        
+        required: true
+        parameters-default-sources:
+            - cmtypes::ldap-base-params
+components:
+  -
+    name: auth-ldap-policy-comp
+    type: stlb::ldap-policy
+    description: This component creates the LDAP policy/action config entities
+    properties-default-sources:
+        - $parameters

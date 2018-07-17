@@ -1,0 +1,75 @@
+---
+name: Upload_IKEA_GoIPDB
+namespace: com.aceiq.mas.stylebooks
+version: "0.1"
+display-name: Upload IKEA GoIP DB
+description: This stylebook uploads the GEOIP database.
+author: "Rickard Wendel - AceIQ AB - 2018-03-07"
+schema-version: "1.0"
+import-stylebooks:
+  - 
+    namespace: netscaler.nitro.config
+    version: "11.1"
+    prefix: ns
+  - 
+    namespace: com.citrix.adc.stylebooks
+    version: "1.0"
+    prefix: stlb
+parameters:
+  - 
+    name: confname
+    label: Confname
+    description: Name for your application config
+    type: string
+    key: true
+    gui:
+      updatable: false
+    required: true
+    default: DC6-GeoIP
+    
+  - 
+    name: location-file-details
+    label: Path name content of location file
+    description: Configure location file
+    type: object
+    parameters:
+    
+        -
+            name: name
+            label: Name of location file
+            description: Name of the Geo IP Location File
+            type: string
+            required: true
+            
+        -
+          name: path
+          label: Full path of the location File
+          description: The systemfile path of the geolocation file in NetScaler
+          type: string 
+          required: true
+          default: "/var/netscaler/inbuilt_db/"
+          
+        -
+          name: content
+          label: Content of the location File
+          description: Content of the geolocation file in NetScaler
+          type: file
+          required: true
+          
+  
+
+components:
+  -
+   name: upload-file-comp
+   type: ns::systemfile
+   properties:
+      filename: $parameters.location-file-details.name
+      filelocation: $parameters.location-file-details.path
+      filecontent: base64.encode($parameters.location-file-details.content.contents)
+      
+  -
+    name: locationfile-comp
+    type: ns::locationfile
+    description: Adding LocationFile 
+    properties:
+      Locationfile: $parameters.location-file-details.path + $parameters.location-file-details.name

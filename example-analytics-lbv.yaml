@@ -1,0 +1,56 @@
+---
+name: example-analytics-lbv
+namespace: com.acme.stylebooks
+description: "This stylebook defines an example operations component- enables only webinsight"
+display-name: "SB Operations (LB & CS)"
+schema-version: "1.0"
+version: "0.1"
+import-stylebooks: 
+  - 
+    namespace: netscaler.nitro.config
+    prefix: ns
+    version: "10.5"
+    
+parameters:
+  
+    
+  -
+    name: appflowfilter
+    type: string
+    required: true
+    
+    
+
+substitutions:
+  
+  analytics_object_lbtype: lbvserver
+components:
+
+  -
+    name: my-lbvserver-comp
+    type: ns::lbvserver
+    properties:
+      name: vsvs12
+      servicetype: HTTP
+      ipv46: 192.167.1.101
+      port: 80
+      lbmethod: ROUNDROBIN
+      
+outputs:
+  
+  -
+    name: mylbs
+    value: $components.my-lbvserver-comp
+
+
+    
+operations: 
+  analytics: 
+    - 
+      name: lbvserver-op
+      properties:
+        target: $outputs.mylbs
+        filter: $parameters.appflowfilter
+        insights: 
+          - 
+            type: webinsight
