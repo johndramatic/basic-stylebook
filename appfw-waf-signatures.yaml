@@ -1,0 +1,56 @@
+---
+name: appfw-waf-signatures
+namespace: com.citrix.adc.stylebooks 
+version: "1.0"
+display-name: "StyleBook for AppFw signatures configuration"
+description: "This stylebook configures a default config for an appfw signatures."
+schema-version: "1.0"
+
+import-stylebooks: 
+  - 
+    namespace: com.citrix.adc.commontypes
+    prefix: cmtypes
+    version: "1.0"
+  -
+    namespace: netscaler.nitro.config
+    prefix: ns
+    version: "12.0"
+
+parameters: 
+  - 
+    name: name
+    required: true
+    type: string
+    description: |
+      Name for the signature file
+    label: Signature name
+  -
+    name: signature-contents
+    label: "File Contents"
+    type: string
+    gui:
+      updatable: false
+    required: true
+
+components:
+  -
+    name: appfw-signatures-systemfile-comp
+    properties:
+      filename: $parameters.name
+      filelocation: "/var/tmp"
+      filecontent: base64($parameters.signature-contents)
+    type: ns::systemfile
+  -
+    name: appfw-signatures
+    meta-properties:
+      action: import
+    properties:
+      name: $parameters.name
+      src: str("local:") + $parameters.name
+    type: ns::appfwsignatures
+
+outputs:
+  -
+    name: appfw-signatures
+    condition: exists($parameters.name)
+    value: $components.appfw-signatures
