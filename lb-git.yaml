@@ -1,5 +1,5 @@
 --- 
-name: lb-git
+name: lb-git1
 namespace: com.citrix.adc.stylebooks
 version: "1.1"
 display-name: "HTTP/SSL LoadBalancing StyleBook"
