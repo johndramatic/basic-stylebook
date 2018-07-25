@@ -1,4 +1,4 @@
-name: file-test
+name: file-test-a
 namespace: com.example.stylebook
 version: "1.0"
 display-name: Example StyleBook for creating a load balancer with file

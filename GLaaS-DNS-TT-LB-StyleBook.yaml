@@ -1,0 +1,283 @@
+
+#
+# ref: TP1-HTTP-LB-StyleBook.
+# Copyright 2016 Citrix Systems, Inc. All rights reserved.
+# This software and documentation contain valuable trade
+# secrets and proprietary property belonging to Citrix Systems, Inc.
+# None of this software and documentation may be copied,
+# duplicated or disclosed without the express
+# written permission of Citrix Systems, Inc.
+--- 
+name: GLaaS-DNS-TT-LB-StyleBook
+description: "This stylebook defines a the LB params for creating a DNS vip at the Top Tier."
+namespace: com.citrix.adc.stylebooks
+schema-version: "1.0"
+version: "1.1"
+import-stylebooks:
+  - 
+    namespace: netscaler.nitro.config
+    prefix: ns
+    version: "10.5"
+parameters: 
+  - 
+    name: lb-appname
+    label: "Load Balanced Application Name"
+    description: "Name of the Load Balanced application"
+    type: string
+    key: true
+    required: true
+    updatable: false
+  - 
+    name: lb-virtual-ip
+    label: "Load Balanced App Virtual IP address"
+    description: "Virtual IP address representing the Load Balanced application"
+    type: ipaddress
+    required: true
+    updatable: false
+  - 
+    name: lb-virtual-port
+    label: "Load Balanced App Virtual Port"
+    type: tcp-port
+    description: "DNS port representing the Load Balanced application"
+    required: true
+    updatable: false
+    default: 53
+  - 
+    name: lb-servicetype
+    label: "Load Balanced App Protocol"
+    description: "Protocol used for the Load Balanced application."
+    type: string
+    required: true
+    updatable: false
+    allowed-values: 
+      - DNS
+      - DNS_TCP
+    default: DNS
+  -
+    name: lb-advanced
+    label: "Advanced Load Balancer Settings"
+    description: "Advanced load balancer settings"
+    type: object
+    required: false
+    updatable: true
+    gui: 
+      collapse_pane: true    
+    parameters: 
+      - 
+        name: lb-algorithm
+        label: "Load Balanced App Algorithm"
+        description: "Load Balancing algorithm for the application"
+        type: string
+        required: false
+        updatable: true
+        allowed-values: 
+          - LEASTCONNECTION
+          - ROUNDROBIN
+          - LEASTRESPONSETIME
+          - STATICPROXIMITY
+          - SOURCEIPHASH
+        default: LEASTCONNECTION        
+      - 
+        name: lb-persistence
+        label: "Load Balanced App Persistence Type"
+        description: "Persistence type used for members of this pool"
+        type: string
+        required: false
+        updatable: true
+        allowed-values: 
+          - NONE
+          - SOURCEIP
+                
+      - 
+        name: lb-clientTimeout
+        label: "Load Balanced App Client Timeout"
+        description: "Client connection timeout after inactivity in seconds"
+        type: number
+        required: false
+        updatable: true
+      -
+        name: lb-comment
+        label: "Load Balanced App Comment"
+        description: "Any comments that you might want to associate with the virtual server."
+        type: string
+        required: false
+        updatable: true
+  - 
+    name: svc-servers
+    label: "Application Servers IP Addresses"
+    description: "List of the IP addresses of the application servers that are members of this Load Balanced application"
+    type: "ipaddress[]"
+    required: true
+    updatable: false
+  - 
+    name: svc-server-port
+    label: "Application Server Port"
+    description: "TCP port of the application servers"
+    type: tcp-port
+    required: true
+    updatable: false
+    default: 53    
+  - 
+    name: svc-servicegroupname
+    label: "Service Group Name"
+    description: "Name of the service group."
+    type: string
+    key: true
+    required: true
+    updatable: true
+  - 
+    name: svc-servicetype
+    label: "Service Group Type"
+    description: "Protocol used to exchange data with the service."
+    type: string
+    required: true
+    updatable: false
+    default: DNS 
+
+  - 
+    name: svcg-advanced
+    label: "Advanced Application Server Settings"
+    description: "Advanced Application Server Settings"
+    type: object
+    required: false
+    updatable: true
+    gui: 
+      collapse_pane: true
+    parameters: 
+      - 
+        name: svc-maxclient
+        label: "Service Group Maximum Clients"
+        description: "Maximum number of simultaneous open connections for the service group."
+        type: number
+        required: false
+        updatable: true
+      - 
+        name: svc-usip
+        label: "Preserve Client Source IP (USIP)"
+        description: "Use client's IP address as the source IP address when initiating connection to the server."
+        type: string
+        required: false
+        updatable: true
+        allowed-values: 
+          - "NO"
+          - "YES"
+        default: "NO"  
+      - 
+        name: svc-useproxyport
+        label: "Service Group UseProxyPort"
+        description: "Use the proxy port as the source port when initiating connections with the server."
+        type: string
+        required: false
+        updatable: true
+        allowed-values: 
+          - "NO"
+          - "YES"
+        default: "NO"
+      - 
+        name: svc-clttimeout
+        label: "Service Group Client Timeout"
+        description: "Time, in seconds, after which to terminate an idle client connection."
+        type: number        
+        required: false
+        updatable: true
+      - 
+        name: svc-svrtimeout
+        label: "Service Group Server Timeout"
+        description: "Time, in seconds, after which to terminate an idle server connection."
+        type: number
+        required: false
+        updatable: true
+      - 
+        name: svc-tcpb
+        label: "Service Group TCP buffering"
+        description: "Enable TCP buffering for the service group."
+        type: string
+        required: false
+        updatable: true
+        allowed-values: 
+          - "NO"
+          - "YES"
+        default: "NO" 
+      - 
+        name: svc-state
+        label: "Service Group State"
+        description: "Initial state of the service group."
+        type: string
+        required: false
+        updatable: true
+        allowed-values: 
+          - DISABLED
+          - ENABLED
+        default: DISABLED
+      - 
+        name: svc-downstateflush
+        label: "Service Group Down State Flush"
+        description: "Flush all active transactions associated with all the services in the service group whose state transitions from UP to DOWN."
+        type: string
+        required: false
+        updatable: true
+        allowed-values: 
+          - DISABLED
+          - ENABLED
+        default: DISABLED          
+      - 
+        name: svc-comment
+        label: "Service Group Comment"
+        description: "Any information about the service group."
+        type: string
+        required: false
+        updatable: true
+
+components: 
+  - 
+    name: lbvserver
+    type: "ns::lbvserver"
+    properties: 
+      clttimeout?: $parameters.lb-advanced.lb-clientTimeout
+      comment?: $parameters.lb-advanced.lb-comment
+      ipv46: $parameters.lb-virtual-ip
+      lbmethod?: $parameters.lb-advanced.lb-algorithm
+      name: $parameters.lb-appname + "_lb"
+      persistencetype?: $parameters.lb-advanced.lb-persistence
+      port?: $parameters.lb-virtual-port
+      servicetype: $parameters.lb-servicetype
+    components: 
+      - 
+        name: svcgrp
+        type: "ns::servicegroup" 
+        properties: 
+          clttimeout?: $parameters.svcg-advanced.svc-clttimeout
+          comment?: $parameters.svcg-advanced.svc-comment
+          downstateflush?: $parameters.svcg-advanced.svc-downstateflush
+          maxclient?: $parameters.svcg-advanced.svc-maxclient
+          servicegroupname: $parameters.svc-servicegroupname
+          servicetype: $parameters.svc-servicetype
+          state?: $parameters.svcg-advanced.svc-state
+          svrtimeout?: $parameters.svcg-advanced.svc-svrtimeout
+          tcpb?: $parameters.svcg-advanced.svc-tcpb
+          useproxyport?: $parameters.svcg-advanced.svc-useproxyport
+          usip?: $parameters.svcg-advanced.svc-usip
+        components: 
+          - 
+            name: lbvserver-svg-binding
+            type: "ns::lbvserver_servicegroup_binding"
+            properties: 
+              name: $parent.parent.properties.name
+              servicegroupname: $parent.properties.name
+          - 
+            name: svg-members
+            type: "ns::servicegroup_servicegroupmember_binding"
+            repeat: $parameters.svc-servers
+            repeat-item: ipaddress
+            properties: 
+              ip: $ipaddress
+              port: $parameters.svc-server-port
+              servicegroupname: $parent.properties.name
+ 
+outputs: 
+  - 
+    name: lbvserver
+    value: $components.lbvserver.properties.name
+  - 
+    name: service-group
+    value: $components.lbvserver.components.svcgrp
