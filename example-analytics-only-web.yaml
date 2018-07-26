@@ -1,0 +1,75 @@
+---
+name: example-analytics-only-web
+namespace: com.acme.stylebooks
+description: "This stylebook defines an example operations component- enables only webinsight"
+display-name: "SB Operations (LB & CS)"
+schema-version: "1.0"
+version: "0.1"
+import-stylebooks:
+  - 
+    namespace: netscaler.nitro.config
+    prefix: ns
+    version: "10.5"
+
+parameters:
+  -
+    name: csvs-name
+    type: string
+    required: true
+
+  -
+    name: appflowfilter
+    type: string
+    required: true
+    default: "true"
+
+
+substitutions:
+  analytics_object_cstype: csvserver
+  analytics_object_lbtype: lbvserver
+
+components:
+  -
+    name: my-csvserver-comp
+    type: ns::csvserver
+    properties:
+      name: $parameters.csvs-name
+      servicetype: HTTP
+      ipv46: 192.178.1.1
+      port: 80
+    components:
+      -
+        name: my-lbvserver-comp
+        type: ns::lbvserver
+        properties:
+          name: a1
+          servicetype: HTTP
+          ipv46: 192.168.1.1
+          port: 80
+  -
+    name: my-lbvserver-comp
+    type: ns::lbvserver
+    properties:
+      name: vsvs
+      servicetype: HTTP
+      ipv46: 192.167.1.100
+      port: 80
+      lbmethod: ROUNDROBIN
+outputs:
+  -
+    name: mycs
+    value: $components.my-csvserver-comp
+  -
+    name: mylbs
+    value: $components.my-lbvserver-comp
+
+operations:
+  analytics:
+    - 
+      name: csvserver-op
+      properties:
+        target: $outputs.mycs
+        filter: $parameters.appflowfilter
+        insights:
+          - 
+            type: webinsight
