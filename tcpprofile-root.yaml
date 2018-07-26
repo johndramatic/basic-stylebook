@@ -1,0 +1,266 @@
+--- 
+name: tcp-profile
+namespace: com.citrix.adc.stylebooks
+version: "1.0"
+description: This stylebook configures a TCP Profile
+schema-version: "1.0"
+private: true
+import-stylebooks: 
+    - 
+        namespace: netscaler.nitro.config
+        version: "11.1"
+        prefix: ns
+
+parameters:
+    -
+        name: name
+        type: string
+        label: "Name for a TCP profile"
+        description: "Name for a TCP profile"
+        required: true
+        min-length: 1
+        max-length: 127
+    
+    -
+        name: advanced-params
+        label: TCP Profile Advanced params 
+        description: Parameters for advanced configuration
+        type: object
+        required: true
+        parameters:
+    
+        -
+         name: ws
+         type: string
+         label: "Window-Scale"
+         description: "Enable or disable window scaling"
+         default: DISABLED
+         allowed-values:
+          - DISABLED
+          - ENABLED
+        -
+         name: sack
+         type: string
+         label: "Selective ACKnowledgement"
+         description: "Enable or disable Selective ACKnowledgement"
+         default: DISABLED
+         allowed-values:
+          - DISABLED
+          - ENABLED
+          
+        -
+         name: wsval
+         type: number
+         label: "Factor for new window size min val 0, max val 14"
+         description: "Factor used to calculate the new window size.This argument is needed only when window scaling is enabled"
+         default: 4
+         min-value: 0
+         max-value: 14
+         
+        -
+         name: mss
+         type: number
+         label: "Maximum number of octets to allow in a TCP data segment."
+         description: "Maximum number of octets to allow in a TCP data segment."
+         min-value: 0
+         max-value: 9176
+         
+        -
+         name: maxburst
+         type: number
+         label: "Maximum number of TCP segments allowed in a burst."
+         description: "Maximum number of TCP segments allowed in a burst."
+         default: 6
+         min-value: 1
+         max-value: 255
+         
+        -
+         name: initialcwnd
+         type: number
+         label: "Initial maximum upper limit on the number of TCP packets that can be outstanding on the TCP link to the server."
+         description: "Initial maximum upper limit on the number of TCP packets that can be outstanding on the TCP link to the server."
+         default: 4
+         min-value: 1
+         max-value: 44
+         
+        -
+         name: oooqsize
+         type: number
+         label: "Maximum size of out-of-order packets queue. A value of 0 means no limit."
+         description: "Maximum size of out-of-order packets queue. A value of 0 means no limit."
+         default: 64
+         min-value: 0
+         max-value: 65535
+         
+        -
+         name: minrto
+         type: number
+         label: "Minimum retransmission timeout, in milliseconds, specified in 10-millisecond increments"
+         description: "Minimum retransmission timeout, in milliseconds, specified in 10-millisecond increments (value must yield a whole number if divided by 10)."
+         default: 1000
+         min-value: 10
+         max-value: 64000
+         
+        -
+         name: buffersize
+         type: number
+         label: "TCP buffering size, in bytes."
+         description: "TCP buffering size, in bytes."
+         default: 8190
+         min-value: 8190
+         max-value: 20971520
+         
+        -
+         name: flavor
+         type: string
+         label: "Set TCP congestion control algorithm."
+         description: "Set TCP congestion control algorithm."
+         default: "Default"
+         allowed-values:
+          - "Default"
+          - "Westwood"
+          - "BIC"
+          - "CUBIC"
+          - "Nile"
+          
+        -
+         name: dynamicreceivebuffering
+         type: string
+         label: "Enable or disable dynamic receive buffering"
+         description: "Note: The buffer size argument must be set for dynamic adjustments to take place."
+         default: DISABLED
+         allowed-values:
+          - ENABLED
+          - DISABLED
+          
+        -
+         name: ka
+         type: string
+         label: "Send periodic TCP keep-alive (KA) probes to check if peer is still up."
+         description: "Send periodic TCP keep-alive (KA) probes to check if peer is still up."
+         default: DISABLED
+         allowed-values:
+          - ENABLED
+          - DISABLED
+          
+        -
+         name: sendbuffsize
+         type: number
+         label: "TCP Send Buffer Size."
+         description: "TCP Send Buffer Size."
+         default: 8190
+         min-value: 8190
+         max-value: 20971520
+         
+        -
+         name: rstwindowattenuate
+         type: string
+         label: "Enable or disable RST window attenuation"
+         description: "Enable or disable RST window attenuation to protect against spoofing. When enabled, will reply with corrective ACK when a sequence number is invalid"
+         default: DISABLED
+         allowed-values:
+          - ENABLED
+          - DISABLED
+          
+        -
+         name: spoofsyndrop
+         type: string
+         label: "Enable or disable drop of invalid SYN packets"
+         description: "Enable or disable drop of invalid SYN packets to protect against spoofing. When disabled, established connections will be reset when a SYN packet is receive"
+         default: ENABLED
+         allowed-values:
+          - ENABLED
+          - DISABLED
+          
+        -
+         name: ecn
+         type: string
+         label: "Enable or disable TCP Explicit Congestion Notification."
+         description: "Enable or disable TCP Explicit Congestion Notification"
+         default: DISABLED
+         allowed-values:
+          - ENABLED
+          - DISABLED
+          
+        -
+         name: frto
+         type: string
+         label: "Enable or disable FRTO (Forward RTO-Recovery)."
+         description: "Enable or disable FRTO (Forward RTO-Recovery)."
+         default: DISABLED
+         allowed-values:
+          - ENABLED
+          - DISABLED
+          
+        -
+         name: maxcwnd
+         type: number
+         label: "TCP Maximum Congestion Window"
+         description: "TCP Maximum Congestion Window"
+         default: 524288
+         min-value: 8190
+         max-value: 20971520
+         
+        -
+         name: rstmaxack
+         type: string
+         label: "Enable or disable acceptance of RST that is out of window yet echoes highest ACK sequence number. Useful only in proxy mode."
+         description: "Enable or disable acceptance of RST that is out of window yet echoes highest ACK sequence number. Useful only in proxy mode."
+         default: DISABLED
+         allowed-values:
+          - ENABLED
+          - DISABLED
+          
+        -
+         name: fack
+         type: string
+         label: "Enable or disable FACK (Forward ACK)."
+         description: "Enable or disable FACK (Forward ACK)."
+         default: DISABLED
+         allowed-values:
+          - ENABLED
+          - DISABLED
+        
+        -
+         name: tcpmode
+         type: string
+         label: "TCP Optimization modes TRANSPARENT / ENDPOINT."
+         description: "TCP Optimization modes TRANSPARENT / ENDPOINT."
+         allowed-values:
+          - TRANSPARENT
+          - ENDPOINT               
+        
+
+components:
+    -
+        name: ns-tcpprofile-comp
+        type: ns::nstcpprofile
+        properties:
+            name: $parameters.name
+            ws: $parameters.advanced-params.ws
+            sack: $parameters.advanced-params.sack
+            wsval: $parameters.advanced-params.wsval
+            mss: $parameters.advanced-params.mss
+            maxburst: $parameters.advanced-params.maxburst
+            initialcwnd: $parameters.advanced-params.initialcwnd
+            oooqsize: $parameters.advanced-params.oooqsize
+            minrto: $parameters.advanced-params.minrto
+            buffersize: $parameters.advanced-params.buffersize
+            flavor: $parameters.advanced-params.flavor
+            dynamicreceivebuffering: $parameters.advanced-params.dynamicreceivebuffering
+            ka: $parameters.advanced-params.ka
+            sendbuffsize: $parameters.advanced-params.sendbuffsize
+            rstwindowattenuate: $parameters.advanced-params.rstwindowattenuate
+            spoofsyndrop: $parameters.advanced-params.spoofsyndrop
+            ecn: $parameters.advanced-params.ecn
+            frto: $parameters.advanced-params.frto
+            maxcwnd: $parameters.advanced-params.maxcwnd
+            fack: $parameters.advanced-params.fack
+            rstmaxack: $parameters.advanced-params.rstmaxack
+            tcpmode: $parameters.advanced-params.tcpmode
+            
+outputs:
+    -
+        name: ns-tcp-profile
+        value: $components.ns-tcpprofile-comp
+        description: The Component representing NS TCP Profile
