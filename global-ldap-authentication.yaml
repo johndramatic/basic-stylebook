@@ -1,0 +1,107 @@
+---
+name: global-ldap-authentication
+description: Configure LDAP Authentication on NetScaler Appliance for Management Purposes
+display-name: LDAP Authentication 
+namespace: com.citrix.adc.enterprise.stylebooks
+version: "1.0"
+schema-version: "1.0"
+import-stylebooks:
+  -
+    namespace: netscaler.nitro.config
+    version: "10.5"
+    prefix: ns
+  - 
+    namespace: com.citrix.adc.stylebooks
+    version: "1.0"
+    prefix: stlb
+
+parameters:
+      -
+        name: appname
+        label: Application Name
+        description: The Name of the application
+        type: string
+        required: true
+        key: true
+      -
+        name: vip
+        label: Active Directory Authentication VIP
+        description: The VIP IP address used for Active Directory vserver
+        type: ipaddress
+        required: true
+      -
+        name: server-ip
+        type: ipaddress
+        label: Active Directory Server IP
+        description: The Active Directory Server IP Address
+        required: true
+      -
+        name: base
+        label: Active Directory Base String
+        description: The Active Directory LDAP Base string for authentication. Example "cn=Users,dc=acme,dc=com"
+        type: string
+        required: true
+      -
+        name: bind-dn
+        type: string
+        label: Active Directory LDAP Bind Distinguished Name (DN)
+        description: LDAP Bind Distinguished Name (DN) used to bind to the LDAP server (Active Directory server). For example "cn=Administrator,cn=Users,dc=acme,dc=com"
+        required: true
+      -
+        name: bind-dn-password
+        type: password
+        label: Active Directory LDAP Bind Distinguished Name (DN) Password
+        description: LDAP Bind Distinguished Name (DN) password for Active Directory Authentication
+        min-length: 1
+        required: true
+      -
+        name: login-name
+        label: Active Directory user name Attribute
+        description: Active Directory attribute for user name. The NetScaler uses the LDAP attribute to query external Active Directory Servers. For example "samAccountName"
+        type: string
+        required: true
+      -
+        name: group-attribute-name
+        label: Active Directory group Attribute Name
+        description: Active Directory group Attribute Name. The NetScaler uses this attribute to extract the user's groups. For example "memberOf"
+        type: string
+        required: true
+      -
+        name: group-subattribute-name
+        label: Active Directory Group Sub-Attribute name
+        description: Active Directory Group sub-attribute name. The NetScaler uses this subattribute to extract the user's groups. For example "cn"
+        type: string
+        required: true
+      -
+        name: auth-domain
+        label: Active Directory Authentication Domain
+        description: Active Directory Authentication DNS Domain name
+        type: string
+
+components:      
+      -
+         name: auth-ldap-policy-comp
+         type: stlb::ldap-policy
+         description: This component creates a NetScaler LDAP policy/action config entities for Active Directory
+         properties:
+            appname: $parameters.appname
+            ldap-settings:
+             is-activedirectory: true
+             server-ip: $parameters.server-ip
+             ldap-base: $parameters.base
+             bind-dn: $parameters.bind-dn
+             bind-dn-password: $parameters.bind-dn-password
+             user-attribute-name: $parameters.login-name
+             group-attribute-name: $parameters.group-attribute-name
+             group-subattribute-name: $parameters.group-subattribute-name
+             sso-attribute-name: str("")
+             allow-password-change: true
+             allow-following-referrals: true
+            
+      -
+         name: global-ldap-binding-comp
+         type: ns::systemglobal_authenticationldappolicy_binding
+         description: System global ldap policy binding
+         properties:
+             priority: 10
+             policyname: $components.auth-ldap-policy-comp.outputs.ldap-auth-policy.properties.name
