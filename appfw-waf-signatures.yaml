@@ -1,7 +1,7 @@
 ---
 name: appfw-waf-signatures
 namespace: com.citrix.adc.stylebooks 
-version: "1.0"
+version: "1.1"
 display-name: "StyleBook for AppFw signatures configuration"
 description: "This stylebook configures a default config for an appfw signatures."
 schema-version: "1.0"

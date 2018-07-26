@@ -1,7 +1,7 @@
 --- 
 name: add-ssl-cert
 namespace: com.citrix.adc.stylebooks
-version: "1.0"
+version: "1.1"
 description: "This StyleBook uploads certificates files to NetScaler and creates corresponding CertKeys."
 schema-version: "1.0"
 import-stylebooks: 
