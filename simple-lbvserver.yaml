@@ -21,6 +21,10 @@ parameters:
   name: ip
   type: ipaddress
 
+ -
+  name: appname
+  type: string
+
 substitutions:
   append_app_name(name): $name + "myApp"
 
