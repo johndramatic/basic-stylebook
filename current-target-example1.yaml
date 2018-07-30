@@ -1,0 +1,59 @@
+name: current-target-example1
+namespace: com.example.stylebook
+version: "1.1"
+display-name: Example StyleBook for creating a load balancer
+description: Example StyleBook for creating a load balancer
+schema-version: "1.0"
+target-roles:
+  -
+    name: role1
+    min-targets: 1
+  -
+    name: role2
+    min-targets: 1
+import-stylebooks: 
+  - 
+    namespace: netscaler.nitro.config
+    version: "10.5"
+    prefix: ns
+parameters: 
+  - 
+    name: appname
+    label: "Application Name"
+    description: "Application Name with which the configpack will be identified with"
+    type: string
+    key: true
+    gui:
+      updatable: false
+    required: true
+  - 
+    name: vip-ipaddress
+    label: "Load Balancer IP Address"
+    description: "IP Address of the Load Balancer VIP"
+    type: ipaddress
+    gui:
+      updatable: false
+    required: true
+components:
+  -
+    name: lbvserver-comp1
+    type: ns::lbvserver
+    roles:
+      -
+       role2
+    properties: 
+      name: str($current-target.ip) + "-lb1"
+      ipv46: $parameters.vip-ipaddress
+      servicetype: "http"
+      port: 80
+  -
+    name: lbvserver-comp2
+    type: ns::lbvserver
+    roles:
+      -
+       role1
+    properties: 
+      name: str($current-target.ip) + "-lb2"
+      ipv46: 5.5.5.5
+      servicetype: "http"
+      port: 80

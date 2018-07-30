@@ -1,0 +1,36 @@
+name: file-test
+namespace: com.example.stylebook
+version: "1.0"
+display-name: Example StyleBook for creating a load balancer with file
+description: Example StyleBook for creating a load balancer with file
+schema-version: "1.0"
+import-stylebooks:
+  -
+    namespace: netscaler.nitro.config
+    version: "11.1"
+    prefix: ns
+parameters:
+ 
+ 
+  -
+    name: filename
+    label: "System filename"
+    description: "Name of the file"
+    type: string
+   
+  -
+    name: filecontent
+    label: "Content of the System file"
+    description: "Content of the system file in base64 format"
+    type: string
+   
+ 
+components:
+ 
+  -
+    name: file-comp
+    type: ns::systemfile
+    properties:
+      filename: $parameters.filename
+      filecontent: $parameters.filecontent
+      filelocation: '/var/'
