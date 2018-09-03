@@ -1,5 +1,5 @@
 ---
-name: lb-app
+name: lb-app-b
 description: "This stylebook defines a simple lbvserver"
 display-name: "LBVserver (HTTP)"
 namespace: com.acme.stylebooks
