@@ -4,6 +4,7 @@ description: "This stylebook defines a simple lbvserver"
 display-name: "LBVserver (HTTP)"
 namespace: com.acme.stylebooks
 schema-version: "1.0"
+deprecate: true
 version: "0.1"
 import-stylebooks:
  -
