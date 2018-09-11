@@ -51,3 +51,5 @@ outputs:
   -
     name: lbvserver
     value: $components.my-lbvserver-comp
+#editing lb-app-b
+#editing lb-app-b
