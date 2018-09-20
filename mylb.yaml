@@ -13,7 +13,7 @@ parameters-default-sources:
   - cmtypes::lbname
   - cmtypes::lbip
   - cmtypes::lbport
-  - cmtypes::lbsvctype
+  - cmtypes::lb
 
 
 components: 
