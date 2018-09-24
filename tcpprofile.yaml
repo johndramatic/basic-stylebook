@@ -21,7 +21,7 @@ import-stylebooks:
 
 parameters-default-sources:
   
-  - stlb::tcp2-profile
+  - stlb::tcp-profile
 
 parameters:
   
