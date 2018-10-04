@@ -2,6 +2,7 @@
 name: mylb
 namespace: com.citrix.adc.commontypes
 version: "1.0"
+description: "This is to verify dependencies"
 schema-version: "1.0"
 import-stylebooks:
  - 
