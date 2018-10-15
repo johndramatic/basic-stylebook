@@ -9,6 +9,7 @@ description: |
      - A SNIP address or a GLB site IP address is configured
      - The required firewall and security groups are configured in the cloud service providers. 
 schema-version: "1.0"
+version: "1.0"
 import-stylebooks: 
   - 
     namespace: netscaler.nitro.config
