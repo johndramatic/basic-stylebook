@@ -24,13 +24,6 @@ parameters:
         required: true
         key: true
 
-    -
-        name: appname2
-        label: Application Name
-        description: Name of the GLB application
-        type: string
-        required: true
-        key: true
 
     -
         name: protocol
