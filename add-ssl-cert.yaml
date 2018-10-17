@@ -1,0 +1,50 @@
+--- 
+name: add-ssl-cert
+namespace: com.citrix.adc.stylebooks
+version: "1.0"
+description: "This StyleBook uploads certificates files to NetScaler and creates corresponding CertKeys."
+schema-version: "1.0"
+import-stylebooks: 
+  - 
+    namespace: netscaler.nitro.config
+    prefix: ns
+    version: "10.5"
+  - 
+    namespace: com.citrix.adc.commontypes
+    prefix: cmtypes
+    version: "1.0"
+parameters: 
+  - 
+    name: certificates
+    label: Certificate
+    description: "List of certificates to be bound to this virtual load balanced application"
+    type: "cmtypes::certificate"
+    required: false
+    
+components:
+  - 
+    name: pem-cert-files-comp
+    type: ns::systemfile
+    description: "This list of components upload the PEM certificate files onto the NetScaler device."
+    properties: 
+      filename: $parameters.certificates.cert-file.filename
+      filelocation: "/nsconfig/ssl"
+      filecontent: base64($parameters.certificates.cert-file.contents)
+      fileencoding: "BASE64"
+      
+  - 
+    name: pem-KEY-files-comp
+    type: ns::systemfile
+    description: "This list of components upload the PEM KEY files onto the NetScaler device."
+    properties: 
+      filename: $parameters.certificates.key-file.filename
+      filelocation: "/nsconfig/ssl"
+      filecontent: base64($parameters.certificates.key-file.contents)
+      fileencoding: "BASE64"
+  - 
+    name: cert-files-comp
+    type: ns::sslcertkey
+    properties: 
+      certkey:  $parameters.certificates.cert-name
+      cert: $parameters.certificates.cert-file.filename
+      key: $parameters.certificates.key-file.filename
