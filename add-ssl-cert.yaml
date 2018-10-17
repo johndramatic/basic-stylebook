@@ -17,7 +17,7 @@ parameters:
   - 
     name: certificates
     label: Certificate
-    description: "List of certificates to be bound to this virtual load balanced application"
+    description: "chList of certificates to be bound to this virtual load balanced application"
     type: "cmtypes::certificate"
     required: false
     
