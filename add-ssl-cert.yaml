@@ -24,7 +24,7 @@ parameters:
 components:
   - 
     name: pem-cert-files-comp
-    type: nis::systemfile
+    type: ns::systemfile
     description: "This list of components upload the PEM certificate files onto the NetScaler device."
     properties: 
       filename: $parameters.certificates.cert-file.filename
