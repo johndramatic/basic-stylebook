@@ -8,7 +8,7 @@ import-stylebooks:
   - 
     namespace: netscaler.nitro.config
     prefix: ns
-    version: "100.5"
+    version: "10.5"
   - 
     namespace: com.citrix.adc.commontypes
     prefix: cmtypes
@@ -24,7 +24,7 @@ parameters:
 components:
   - 
     name: pem-cert-files-comp
-    type: ns::systemfile
+    type: nis::systemfile
     description: "This list of components upload the PEM certificate files onto the NetScaler device."
     properties: 
       filename: $parameters.certificates.cert-file.filename
