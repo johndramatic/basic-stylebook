@@ -19,8 +19,8 @@ import-stylebooks:
 parameters:
   -
     name: auth-vserver-name
-    label: "Name for authentication vserver"
-    description: "Name for authentication vserver"
+    label: "Name for Authentication vserver"
+    description: "Name for Authentication vserver"
     type: string
     key: true
     required: true
