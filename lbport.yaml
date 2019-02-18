@@ -13,13 +13,5 @@ parameters:
     type: tcp-port
     gui:
       updatable: false
-    default: 80
+    default: 443
 
-  - 
-    name: second-lb-virtual-port
-    label: "Second Load Balanced App Virtual Port"
-    description: "TCP port representing the Load Balanced application"
-    type: tcp-port
-    gui:
-      updatable: false
-    default: 80
