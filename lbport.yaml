@@ -16,7 +16,7 @@ parameters:
     default: 80
 
   - 
-    name: 2ndlb-virtual-port
+    name: second-lb-virtual-port
     label: "Second Load Balanced App Virtual Port"
     description: "TCP port representing the Load Balanced application"
     type: tcp-port
