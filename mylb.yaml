@@ -3,7 +3,7 @@ name: mylb
 namespace: com.citrix.adc.commontypes
 version: "1.0"
 schema-version: "1.0"
-uuuuimport-stylebooks:
+import-stylebooks:
  - 
     namespace: com.citrix.adc.commontypes
     prefix: cmtypes
@@ -16,7 +16,7 @@ uuuuimport-stylebooks:
     
 parameters-default-sources:
   - cmtypes::lbname
-  - cmtypes::lbip
+  - cmtypes::lbip2
   - cmtypes::lbport
   - cmtypes::lbsvctype
 
