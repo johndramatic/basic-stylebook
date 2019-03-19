@@ -19,7 +19,7 @@ parameters-default-sources:
   - cmtypes::lbip
   - cmtypes::lbport
   - cmtypes::lbsvctype
-
+  - cmtypes::certificate
 
 components: 
   - 
