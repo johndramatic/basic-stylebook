@@ -1,5 +1,5 @@
 ---
-name: lbport
+name: 
 namespace: com.citrix.adc.commontypes
 version: "1.0"
 private: true
