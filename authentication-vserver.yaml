@@ -22,7 +22,7 @@ parameters:
     description: "Name for Authentication vserver"
     type: string
     key: true
-    #required: true
+    required: true
   -
     name: auth-vserver-ip
     label: "Virtual IP address of Authentication vserver"
